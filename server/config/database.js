@@ -11,17 +11,19 @@ const pool = new Pool({
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
     ssl: {
-        rejectUnauthorized: false  // Required for Neon
+        rejectUnauthorized: false
     }
 });
 
-// Connection function
+// This is the connectDB function that your index.js is calling
 const connectDB = async () => {
     try {
         await pool.connect();
         console.log('✅ Connected to PostgreSQL database');
+        return true;
     } catch (error) {
         console.error('❌ Database connection error:', error.message);
+        return false;
     }
 };
 
@@ -38,5 +40,5 @@ pool.connect((err, client, release) => {
 module.exports = {
     query: (text, params) => pool.query(text, params),
     pool,
-    connectDB
+    connectDB  // This exports the connectDB function
 };
