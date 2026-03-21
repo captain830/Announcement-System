@@ -1,6 +1,10 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_NAME:', process.env.DB_NAME);
+
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
@@ -9,25 +13,13 @@ const pool = new Pool({
     database: process.env.DB_NAME,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 5000,
     ssl: {
         rejectUnauthorized: false
     }
 });
 
-// This is the connectDB function that your index.js is calling
-const connectDB = async () => {
-    try {
-        await pool.connect();
-        console.log('✅ Connected to PostgreSQL database');
-        return true;
-    } catch (error) {
-        console.error('❌ Database connection error:', error.message);
-        return false;
-    }
-};
-
-// Test connection on load
+// Test connection
 pool.connect((err, client, release) => {
     if (err) {
         console.error('❌ Database connection error:', err.message);
@@ -37,8 +29,18 @@ pool.connect((err, client, release) => {
     }
 });
 
-module.exports = {
-    query: (text, params) => pool.query(text, params),
-    pool,
-    connectDB  // This exports the connectDB function
+// This is the connectDB function that index.js calls
+const connectDB = async () => {
+    try {
+        const client = await pool.connect();
+        console.log('✅ Database connection established');
+        client.release();
+        return true;
+    } catch (error) {
+        console.error('❌ Database connection failed:', error.message);
+        return false;
+    }
 };
+
+// Export the function as the main export
+module.exports = connectDB;
