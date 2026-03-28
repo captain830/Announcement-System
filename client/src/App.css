@@ -4099,3 +4099,191 @@ html {
         scroll-padding-top: 70px;
     }
 }
+/* Mobile Menu Improvements */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--gray);
+        padding: 0.5rem;
+        margin-left: auto;
+        z-index: 1002;
+    }
+
+    .mobile-menu-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray);
+        padding: 0.5rem;
+        z-index: 1002;
+    }
+
+    .nav-container {
+        flex-wrap: wrap;
+        padding: 0.8rem 1rem;
+        position: relative;
+    }
+
+    .nav-logo {
+        flex: 1;
+    }
+
+    .nav-search {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0.8rem;
+    }
+
+    /* Mobile Menu Panel */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 4rem 1.5rem 2rem;
+        gap: 0.5rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+        z-index: 1001;
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    /* Menu Links */
+    .nav-links .nav-link,
+    .nav-links .create-link {
+        width: 100%;
+        padding: 0.8rem 0;
+        font-size: 1.1rem;
+        border-bottom: 1px solid var(--light-gray);
+        display: block;
+        text-align: left;
+    }
+
+    /* Notifications Section in Mobile Menu */
+    .nav-links .nav-notifications {
+        width: 100%;
+        margin-top: 0.5rem;
+        border-bottom: 1px solid var(--light-gray);
+        padding: 0.8rem 0;
+    }
+
+    .nav-links .notif-btn {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        padding: 0;
+    }
+
+    /* User Section in Mobile Menu */
+    .nav-links .nav-user {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .nav-links .user-menu {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .nav-links .user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-links .user-dropdown {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin-top: 0.5rem;
+    }
+
+    .nav-links .user-dropdown a,
+    .nav-links .user-dropdown button {
+        padding: 0.6rem 0;
+        color: var(--gray);
+        font-size: 1rem;
+        background: transparent;
+        border-bottom: 1px solid var(--light-gray);
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-links .user-dropdown a:hover,
+    .nav-links .user-dropdown button:hover {
+        background: transparent;
+        color: var(--primary);
+        transform: translateX(5px);
+    }
+
+    .nav-links .user-dropdown hr {
+        display: none;
+    }
+
+    /* Notification Dropdown in Mobile */
+    .nav-links .notif-dropdown {
+        position: static;
+        width: 100%;
+        margin-top: 0.5rem;
+        box-shadow: none;
+        border: 1px solid var(--light-gray);
+        border-radius: 12px;
+        max-height: 300px;
+    }
+
+    /* Remove hover effects that don't work well on mobile */
+    .nav-links .user-menu:hover .user-dropdown {
+        display: flex;
+    }
+}
+/* Mobile Menu Animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.nav-links.active {
+    animation: slideIn 0.3s ease forwards;
+}
