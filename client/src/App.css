@@ -4287,3 +4287,84 @@ html {
 .nav-links.active {
     animation: slideIn 0.3s ease forwards;
 }
+/* ========================================
+   AUTH PAGES TEXT VISIBILITY FIX
+   ======================================== */
+
+/* Ensure all text on auth pages is readable */
+.auth-card,
+.auth-card * {
+    color: var(--dark) !important;
+}
+
+/* Make form labels visible */
+.auth-card label {
+    color: #1f2937 !important;
+    font-weight: 600 !important;
+}
+
+/* Make input text dark and readable */
+.auth-card input,
+.auth-card select {
+    color: #1f2937 !important;
+    background: white !important;
+    border: 2px solid #e5e7eb !important;
+}
+
+/* Input placeholder text */
+.auth-card input::placeholder,
+.auth-card select::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}
+
+/* Input focus state */
+.auth-card input:focus,
+.auth-card select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+    outline: none !important;
+}
+
+/* Button text */
+.auth-card button {
+    color: white !important;
+    background: var(--gradient) !important;
+}
+
+/* Link text */
+.auth-link a {
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+}
+
+.auth-link a:hover {
+    text-decoration: underline !important;
+}
+
+/* Heading text */
+.auth-card h2 {
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* Error messages if any */
+.error-message {
+    color: #ef4444 !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .auth-card {
+        background: rgba(255, 255, 255, 0.98) !important;
+    }
+    
+    .auth-card input,
+    .auth-card select {
+        font-size: 16px !important; /* Prevents zoom on mobile */
+    }
+}
