@@ -14,6 +14,12 @@ const pool = new Pool({
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
+    // Add SSL for production (Neon requires it)
+    ...(process.env.NODE_ENV === 'production' && {
+        ssl: {
+            rejectUnauthorized: false
+        }
+    })
 });
 
 // Test connection
@@ -38,7 +44,6 @@ const connectDB = async () => {
     }
 };
 
-// Export both connectDB and query
 module.exports = {
     connectDB,
     query: (text, params) => pool.query(text, params),
