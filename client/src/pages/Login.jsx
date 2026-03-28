@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -8,6 +8,12 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
+
+    // Clear form when component mounts
+    useEffect(() => {
+        setEmail('');
+        setPassword('');
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,25 +31,29 @@ const Login = () => {
         <div className="auth-container">
             <div className="auth-card">
                 <h2>Login to Notice Board</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="form-group">
                         <label>Email</label>
                         <input
                             type="email"
+                            name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             placeholder="Enter your email"
+                            autoComplete="off"
                         />
                     </div>
                     <div className="form-group">
                         <label>Password</label>
                         <input
                             type="password"
+                            name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             placeholder="Enter your password"
+                            autoComplete="new-password"
                         />
                     </div>
                     <button type="submit" disabled={loading}>
