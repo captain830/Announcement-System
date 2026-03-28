@@ -4,34 +4,29 @@ require('dotenv').config();
 
 const app = express();
 
-// Updated CORS configuration
-const allowedOrigins = [
-    'https://announcement-system-f45w.vercel.app',
-    'https://announcement-system-f45w.vercel.app/',
-    'http://localhost:5173',
-    'http://localhost:3000'
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            console.log('Origin not allowed:', origin);
-            callback(null, true); // Temporarily allow all for debugging
-        }
-    },
+// Comprehensive CORS configuration
+const corsOptions = {
+    origin: [
+        'https://announcement-system-f45w.vercel.app',
+        'https://announcement-system-f45w.vercel.app',
+        'http://localhost:5173',
+        'http://localhost:3000'
+    ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database connection - IMPORTANT: destructure connectDB
+// Database connection
 const { connectDB } = require('./config/database');
 connectDB();
 
