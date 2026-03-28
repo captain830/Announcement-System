@@ -12,6 +12,7 @@ const Navbar = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [unreadCount, setUnreadCount] = useState(0);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // ✅ Added here
 
     useEffect(() => {
         if (user) {
@@ -57,13 +58,27 @@ const Navbar = () => {
         }
     };
 
+    // Close mobile menu when clicking a link
+    const closeMobileMenu = () => {
+        setMobileMenuOpen(false);
+    };
+
     return (
         <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
             <div className="nav-container">
-                <Link to="/" className="nav-logo">
+                <Link to="/" className="nav-logo" onClick={closeMobileMenu}>
                     <span className="logo-icon">📢</span>
                     <span className="logo-text">NoticeBoard</span>
                 </Link>
+
+                {/* Mobile Menu Button */}
+                <button 
+                    className="mobile-menu-btn" 
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    aria-label="Menu"
+                >
+                    ☰
+                </button>
 
                 <form onSubmit={handleSearch} className="nav-search">
                     <input
@@ -75,25 +90,37 @@ const Navbar = () => {
                     <button type="submit">🔍</button>
                 </form>
 
-                <div className="nav-links">
-                    <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
+                {/* Mobile Navigation Links */}
+                <div className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
+                    {/* Close button for mobile */}
+                    <button 
+                        className="mobile-menu-close" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        aria-label="Close menu"
+                    >
+                        ✕
+                    </button>
+
+                    <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>
                         Home
                     </Link>
-                    <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>
+                    
+                    <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>
                         About
                     </Link>
 
-                    <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
+                    <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>
                         Contact
                     </Link>
+                    
                     {user?.role === 'admin' && (
-                        <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
+                        <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             Admin
                         </Link>
                     )}
 
                     {['admin', 'teacher'].includes(user?.role) && (
-                        <Link to="/create" className={`nav-link create-link ${location.pathname === '/create' ? 'active' : ''}`}>
+                        <Link to="/create" className={`nav-link create-link ${location.pathname === '/create' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             + Create
                         </Link>
                     )}
@@ -136,11 +163,11 @@ const Navbar = () => {
                                 className="user-avatar"
                             />
                             <div className="user-dropdown">
-                                <Link to="/profile">👤 Profile</Link>
-                                <Link to="/settings">⚙️ Settings</Link>
-                                <Link to="/notifications">🔔 Notifications</Link>
+                                <Link to="/profile" onClick={closeMobileMenu}>👤 Profile</Link>
+                                <Link to="/settings" onClick={closeMobileMenu}>⚙️ Settings</Link>
+                                <Link to="/notifications" onClick={closeMobileMenu}>🔔 Notifications</Link>
                                 <hr />
-                                <button onClick={logout}>🚪 Logout</button>
+                                <button onClick={() => { logout(); closeMobileMenu(); }}>🚪 Logout</button>
                             </div>
                         </div>
                     </div>

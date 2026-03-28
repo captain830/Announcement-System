@@ -14,7 +14,6 @@ const Footer = () => {
             return;
         }
         setSubscribing(true);
-        // Simulate subscription
         setTimeout(() => {
             toast.success('Subscribed successfully!');
             setEmail('');
@@ -22,14 +21,38 @@ const Footer = () => {
         }, 1000);
     };
 
-    // Social Media Links with proper URLs
+    // Your actual social media links with Font Awesome icons
     const socialLinks = [
-        { name: 'Facebook', icon: '📘', url: 'https://facebook.com/noticeboard', color: '#1877f2' },
-        { name: 'Twitter', icon: '🐦', url: 'https://twitter.com/noticeboard', color: '#1da1f2' },
-        { name: 'Instagram', icon: '📷', url: 'https://instagram.com/noticeboard', color: '#e4405f' },
-        { name: 'LinkedIn', icon: '🔗', url: 'https://linkedin.com/company/noticeboard', color: '#0a66c2' },
-        { name: 'YouTube', icon: '▶️', url: 'https://youtube.com/@noticeboard', color: '#ff0000' },
-        { name: 'GitHub', icon: '🐙', url: 'https://github.com/noticeboard', color: '#333' }
+        { 
+            name: 'GitHub', 
+            icon: 'fab fa-github', 
+            url: 'https://github.com/captain830',
+            color: '#333'
+        },
+        { 
+            name: 'Twitter', 
+            icon: 'fab fa-twitter', 
+            url: 'https://x.com/ndungudavid641',
+            color: '#1da1f2'
+        },
+        { 
+            name: 'Facebook', 
+            icon: 'fab fa-facebook-f', 
+            url: 'https://www.facebook.com/profile.php?id=61575683799118',
+            color: '#1877f2'
+        },
+        { 
+            name: 'YouTube', 
+            icon: 'fab fa-youtube', 
+            url: 'https://www.youtube.com/@DavidNdungu-k3q',
+            color: '#ff0000'
+        },
+        { 
+            name: 'Instagram', 
+            icon: 'fab fa-instagram', 
+            url: 'https://www.instagram.com/captain_the_1/',
+            color: '#e4405f'
+        }
     ];
 
     return (
@@ -82,9 +105,9 @@ const Footer = () => {
                         </button>
                     </form>
                     
-                    {/* Social Media */}
+                    {/* Social Media with Font Awesome */}
                     <div className="footer-social">
-                        <h4>Follow Us</h4>
+                        <h4>Follow Me</h4>
                         <div className="social-links">
                             {socialLinks.map((social, index) => (
                                 <a
@@ -95,7 +118,7 @@ const Footer = () => {
                                     className="social-link"
                                     aria-label={social.name}
                                 >
-                                    <span className="social-icon">{social.icon}</span>
+                                    <i className={social.icon}></i>
                                 </a>
                             ))}
                         </div>
@@ -103,23 +126,23 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Contact Info Bar */}
+            {/* Contact Info Bar with Font Awesome */}
             <div className="footer-contact">
                 <div className="contact-info-row">
-                    <span className="contact-icon">📧</span>
+                    <span className="contact-icon"><i className="fas fa-envelope"></i></span>
                     <span>support@noticeboard.com</span>
                     <span className="separator">•</span>
-                    <span className="contact-icon">📞</span>
+                    <span className="contact-icon"><i className="fas fa-phone-alt"></i></span>
                     <span>+254 700 123 456</span>
                     <span className="separator">•</span>
-                    <span className="contact-icon">📍</span>
+                    <span className="contact-icon"><i className="fas fa-map-marker-alt"></i></span>
                     <span>Main Campus, Technology Building</span>
                 </div>
             </div>
 
-            {/* Copyright */}
+            {/* Copyright with Font Awesome heart */}
             <div className="footer-bottom">
-                <p>&copy; {currentYear} NoticeBoard. All rights reserved. | Made with ❤️ for better campus communication</p>
+                <p>&copy; {currentYear} NoticeBoard. All rights reserved. | Made with <i className="fas fa-heart" style={{ color: '#ef4444' }}></i> by Captain</p>
             </div>
         </footer>
     );
