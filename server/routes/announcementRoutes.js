@@ -8,17 +8,37 @@ const {
     updateAnnouncement,
     deleteAnnouncement,
     approveAnnouncement,
-    getAnnouncementStats  // Add this line
+    getAnnouncementStats
 } = require('../controllers/announcementController');
 
-// Stats route - MUST come before the /:id route
+// ✅ Search route - add this BEFORE /:id
+router.get('/search', protect, async (req, res) => {
+    try {
+        const { q } = req.query;
+        const db = require('../config/database');
+        
+        const result = await db.query(
+            `SELECT * FROM announcements 
+             WHERE title ILIKE $1 OR content ILIKE $1
+             ORDER BY created_at DESC`,
+            [`%${q}%`]
+        );
+        
+        res.json({ success: true, announcements: result.rows });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Stats route
 router.get('/stats', protect, getAnnouncementStats);
 
-// Routes
+// Main routes
 router.route('/')
     .get(protect, getAnnouncements)
     .post(protect, createAnnouncement);
 
+// This must come LAST
 router.route('/:id')
     .get(protect, getAnnouncement)
     .put(protect, updateAnnouncement)

@@ -14,9 +14,6 @@ const pool = new Pool({
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
-    ssl: {
-        rejectUnauthorized: false
-    }
 });
 
 // Test connection
@@ -29,7 +26,6 @@ pool.connect((err, client, release) => {
     }
 });
 
-// This is the connectDB function that index.js calls
 const connectDB = async () => {
     try {
         const client = await pool.connect();
@@ -42,5 +38,9 @@ const connectDB = async () => {
     }
 };
 
-// Export the function as the main export
-module.exports = connectDB;
+// Export both connectDB and query
+module.exports = {
+    connectDB,
+    query: (text, params) => pool.query(text, params),
+    pool
+};

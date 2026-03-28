@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -10,8 +9,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database connection
-const connectDB = require('./config/database');
+// Database connection - IMPORTANT: destructure connectDB
+const { connectDB } = require('./config/database');
 connectDB();
 
 // Routes
@@ -46,5 +45,5 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// Export for Vercel (THIS IS CRITICAL!)
+// Export for Vercel
 module.exports = app;
