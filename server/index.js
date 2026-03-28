@@ -4,8 +4,30 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Updated CORS configuration
+const allowedOrigins = [
+    'https://announcement-system-f45w.vercel.app',
+    'https://announcement-system-f45w.vercel.app/',
+    'http://localhost:5173',
+    'http://localhost:3000'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log('Origin not allowed:', origin);
+            callback(null, true); // Temporarily allow all for debugging
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
