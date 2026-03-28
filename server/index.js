@@ -4,14 +4,14 @@ require('dotenv').config();
 
 const app = express();
 
-// Allow all origins for now (simplest fix)
+// Enable CORS for all origins (simplest fix)
 app.use(cors({
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
-// Handle preflight
+// Handle preflight requests
 app.options('*', cors());
 
 app.use(express.json());
@@ -53,4 +53,5 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
+// Export for Vercel
 module.exports = app;
