@@ -4,24 +4,15 @@ require('dotenv').config();
 
 const app = express();
 
-// Comprehensive CORS configuration
-const corsOptions = {
-    origin: [
-        'https://announcement-system-f45w.vercel.app',
-        'https://announcement-system-f45w.vercel.app',
-        'http://localhost:5173',
-        'http://localhost:3000'
-    ],
-    credentials: true,
-    optionsSuccessStatus: 200,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
-};
+// Allow all origins for now (simplest fix)
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options('*', cors(corsOptions));
+// Handle preflight
+app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,5 +53,4 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// Export for Vercel
 module.exports = app;
